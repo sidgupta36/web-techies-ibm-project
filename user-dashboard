@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlastiGen User Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN (for icons like Package, Calendar, Truck, etc.) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom styles for message box */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .message-box.success {
+            background-color: #d1fae5; /* green-100 */
+            color: #065f46; /* green-800 */
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* red-100 */
+            color: #991b1b; /* red-800 */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-gray-800 p-4 sm:p-6 lg:p-8">
+
+    <!-- Message Box Element -->
+    <div id="messageBox" class="message-box text-center text-sm font-medium"></div>
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-6 rounded-t-xl flex items-center justify-between">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i data-lucide="user" class="mr-3 w-8 h-8"></i> User Dashboard
+            </h1>
+            <div id="userIdDisplay" class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full flex items-center">
+                <span class="font-medium mr-2">User ID:</span>
+                <span class="truncate max-w-[150px] sm:max-w-none" id="currentUserId">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-gray-50 p-4 border-b border-gray-200">
+            <ul class="flex flex-wrap justify-center gap-2 sm:gap-4">
+                <li>
+                    <button id="tabRegisterPlastic"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 bg-green-600 text-white shadow-md"
+                        data-tab="registerPlastic">
+                        <i data-lucide="package" class="mr-2 w-5 h-5"></i> Register Plastic
+                    </button>
+                </li>
+                <li>
+                    <button id="tabSchedulePickup"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="schedulePickup">
+                        <i data-lucide="calendar" class="mr-2 w-5 h-5"></i> Schedule Pickup
+                    </button>
+                </li>
+                <li>
+                    <button id="tabTrackStatus"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="trackStatus">
+                        <i data-lucide="truck" class="mr-2 w-5 h-5"></i> Track Status
+                    </button>
+                </li>
+                <li>
+                    <button id="tabRewards"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="rewards">
+                        <i data-lucide="award" class="mr-2 w-5 h-5"></i> Rewards
+                    </button>
+                </li>
+                <li>
+                    <button id="tabEducation"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="education">
+                        <i data-lucide="book-open" class="mr-2 w-5 h-5"></i> Education
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="p-6 sm:p-8 lg:p-10">
+            <!-- Register Plastic Section -->
+            <div id="registerPlastic" class="tab-content bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="plus" class="mr-3 w-6 h-6 text-green-600"></i> Register Your Plastic Waste
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="plasticQuantity" class="block text-sm font-medium text-gray-700 mb-1">
+                            Quantity (in kg)
+                        </label>
+                        <input type="number" id="plasticQuantity" placeholder="e.g., 5.5"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                    </div>
+                    <button id="btnRegisterPlastic"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="recycle" class="mr-2 w-5 h-5"></i> Register Plastic
+                    </button>
+                </div>
+            </div>
+
+            <!-- Schedule Pickup Section -->
+            <div id="schedulePickup" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="calendar" class="mr-3 w-6 h-6 text-emerald-600"></i> Schedule a Pickup
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="pickupDate" class="block text-sm font-medium text-gray-700 mb-1">
+                            Preferred Date
+                        </label>
+                        <input type="date" id="pickupDate"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="pickupTime" class="block text-sm font-medium text-gray-700 mb-1">
+                            Preferred Time
+                        </label>
+                        <input type="time" id="pickupTime"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="pickupLocation" class="block text-sm font-medium text-gray-700 mb-1">
+                            Pickup Location (Address)
+                        </label>
+                        <input type="text" id="pickupLocation" placeholder="e.g., 123 Main St, City, Zip"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <button id="btnSchedulePickup"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="truck" class="mr-2 w-5 h-5"></i> Schedule Pickup
+                    </button>
+                </div>
+            </div>
+
+            <!-- Track Status Section -->
+            <div id="trackStatus" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="list" class="mr-3 w-6 h-6 text-lime-600"></i> Track Pickup Status
+                </h2>
+                <div id="pickupStatusList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <p class="text-gray-600 text-center py-4 col-span-full">Loading pickup status...</p>
+                </div>
+            </div>
+
+            <!-- Rewards Section -->
+            <div id="rewards" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="award" class="mr-3 w-6 h-6 text-yellow-600"></i> Your Rewards
+                </h2>
+                <div class="mb-6 p-4 bg-yellow-50 rounded-lg text-center shadow-inner">
+                    <p class="text-lg text-gray-700">Total Reward Points:</p>
+                    <p id="rewardPointsDisplay" class="text-5xl font-extrabold text-yellow-600 mt-2">0</p>
+                </div>
+
+                <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
+                    <i data-lucide="bar-chart" class="mr-2 w-5 h-5 text-gray-600"></i> Reward History
+                </h3>
+                <div id="rewardHistoryList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <p class="text-gray-600 text-center py-4 col-span-full">Loading reward history...</p>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div id="education" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="book-open" class="mr-3 w-6 h-6 text-teal-600"></i> Educational Content
+                </h2>
+                <div id="educationalContent" class="space-y-6">
+                    <!-- Content will be loaded here by JavaScript -->
+                    <p class="text-gray-600 text-center py-4">Loading educational content...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Global variables for Firebase instances and user ID
+        let app;
+        let db;
+        let auth;
+        let currentUserId = null;
+        let isAuthReady = false; // Flag to ensure auth is ready before Firestore ops
+
+        // Get app ID from global variable, default if not defined
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Function to display messages to the user (instead of alert)
+        function showMessage(msg, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = msg;
+            messageBox.className = 'message-box show'; // Reset classes
+            if (isError) {
+                messageBox.classList.add('error');
+            } else {
+                messageBox.classList.add('success');
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 5000); // Message disappears after 5 seconds
+        }
+
+        // Initialize Firebase on window load
+        window.onload = async () => {
+            try {
+                // Parse Firebase config from global variable
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        currentUserId = user.uid;
+                    } else {
+                        // Sign in anonymously if no initial auth token provided
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                        currentUserId = auth.currentUser?.uid || crypto.randomUUID(); // Fallback to random UUID
+                    }
+                    document.getElementById('currentUserId').textContent = currentUserId;
+                    isAuthReady = true; // Mark auth as ready
+                    console.log("Firebase initialized and auth state ready. User ID:", currentUserId);
+                    // Once auth is ready, fetch initial data
+                    fetchUserData();
+                    setupRealtimeListeners();
+                });
+
+                // Initialize Lucide icons
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showMessage("Failed to initialize the app. Please check console for details.", true);
+            }
+        };
+
+        // Function to fetch initial user data (rewards)
+        async function fetchUserData() {
+            if (!db || !currentUserId || !isAuthReady) {
+                console.log("Waiting for DB or Auth to be ready for initial data fetch.");
+                return;
+            }
+            try {
+                const userDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/profile`, 'data');
+                const userDocSnap = await getDoc(userDocRef);
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    document.getElementById('rewardPointsDisplay').textContent = userData.rewardPoints || 0;
+                } else {
+                    // Create a default profile if it doesn't exist
+                    await setDoc(userDocRef, { rewardPoints: 0, createdAt: serverTimestamp() });
+                    document.getElementById('rewardPointsDisplay').textContent = 0;
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                showMessage("Failed to load user data.", true);
+            }
+        }
+
+        // Function to set up real-time listeners for pickups and rewards
+        function setupRealtimeListeners() {
+            if (!db || !currentUserId || !isAuthReady) {
+                console.log("Waiting for DB or Auth to be ready for real-time listeners.");
+                return;
+            }
+
+            // Real-time listener for Pickups
+            const pickupsColRef = collection(db, `artifacts/${appId}/users/${currentUserId}/pickups`);
+            onSnapshot(pickupsColRef, (snapshot) => {
+                const pickups = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderPickups(pickups.sort((a, b) => (b.createdAt?.toDate() || 0) - (a.createdAt?.toDate() || 0))); // Sort by most recent
+            }, (error) => {
+                console.error("Error fetching pickup status:", error);
+                showMessage("Failed to load pickup status in real-time.", true);
+            });
+
+            // Real-time listener for Rewards History
+            const rewardsColRef = collection(db, `artifacts/${appId}/users/${currentUserId}/rewards`);
+            onSnapshot(rewardsColRef, (snapshot) => {
+                const rewards = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderRewardHistory(rewards.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0))); // Sort by most recent
+            }, (error) => {
+                console.error("Error fetching reward history:", error);
+                showMessage("Failed to load reward history in real-time.", true);
+            });
+        }
+
+        // Function to render pickup status
+        function renderPickups(pickups) {
+            const pickupStatusList = document.getElementById('pickupStatusList');
+            pickupStatusList.innerHTML = ''; // Clear previous content
+
+            if (pickups.length === 0) {
+                pickupStatusList.innerHTML = '<p class="text-gray-600 text-center py-4 col-span-full">No pickups scheduled yet.</p>';
+                return;
+            }
+
+            pickups.forEach(pickup => {
+                let statusIconHtml = '';
+                let statusColorClass = '';
+                switch (pickup.status) {
+                    case 'scheduled':
+                        statusIconHtml = '<i data-lucide="clock" class="w-5 h-5"></i>';
+                        statusColorClass = 'text-blue-500';
+                        break;
+                    case 'confirmed':
+                        statusIconHtml = '<i data-lucide="check-circle" class="w-5 h-5"></i>';
+                        statusColorClass = 'text-green-500';
+                        break;
+                    case 'collected':
+                        statusIconHtml = '<i data-lucide="recycle" class="w-5 h-5"></i>';
+                        statusColorClass = 'text-purple-500';
+                        break;
+                    case 'cancelled':
+                        statusIconHtml = '<i data-lucide="x-circle" class="w-5 h-5"></i>';
+                        statusColorClass = 'text-red-500';
+                        break;
+                    default:
+                        statusIconHtml = '<i data-lucide="info" class="w-5 h-5"></i>';
+                        statusColorClass = 'text-gray-500';
+                }
+
+                const formattedDate = pickup.date ? new Date(pickup.date).toLocaleDateString() : 'N/A';
+                const formattedTime = pickup.time || 'N/A';
+                const formattedLocation = pickup.location || 'N/A';
+                const formattedCreatedAt = pickup.createdAt?.toDate ? pickup.createdAt.toDate().toLocaleString() : 'N/A';
+
+                const pickupCard = document.createElement('div');
+                pickupCard.className = 'bg-white p-4 rounded-lg shadow-md mb-4 flex items-start space-x-4';
+                pickupCard.innerHTML = `
+                    <div class="flex-shrink-0 ${statusColorClass}">
+                        ${statusIconHtml}
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-lg mb-1 capitalize">Status: ${pickup.status}</h3>
+                        <p class="text-gray-700 text-sm">
+                            <span class="font-medium">Date:</span> ${formattedDate}
+                        </p>
+                        <p class="text-gray-700 text-sm">
+                            <span class="font-medium">Time:</span> ${formattedTime}
+                        </p>
+                        <p class="text-gray-700 text-sm">
+                            <span class="font-medium">Location:</span> ${formattedLocation}
+                        </p>
+                        <p class="text-gray-500 text-xs mt-1">
+                            Scheduled on: ${formattedCreatedAt}
+                        </p>
+                    </div>
+                `;
+                pickupStatusList.appendChild(pickupCard);
+                lucide.createIcons(); // Re-render icons for newly added elements
+            });
+        }
+
+        // Function to render reward history
+        function renderRewardHistory(rewards) {
+            const rewardHistoryList = document.getElementById('rewardHistoryList');
+            rewardHistoryList.innerHTML = ''; // Clear previous content
+
+            if (rewards.length === 0) {
+                rewardHistoryList.innerHTML = '<p class="text-gray-600 text-center py-4 col-span-full">No reward history yet. Start donating plastic!</p>';
+                return;
+            }
+
+            rewards.forEach(reward => {
+                const formattedTimestamp = reward.timestamp?.toDate ? reward.timestamp.toDate().toLocaleString() : 'N/A';
+                const rewardCard = document.createElement('div');
+                rewardCard.className = 'bg-white p-4 rounded-lg shadow-md mb-4 flex items-start space-x-4';
+                rewardCard.innerHTML = `
+                    <div class="flex-shrink-0 text-yellow-500">
+                        <i data-lucide="dollar-sign" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-lg mb-1">Points Earned: ${reward.points}</h3>
+                        <p class="text-gray-700 text-sm">
+                            <span class="font-medium">Activity:</span> ${reward.activity}
+                        </p>
+                        <p class="text-gray-500 text-xs mt-1">
+                            Date: ${formattedTimestamp}
+                        </p>
+                    </div>
+                `;
+                rewardHistoryList.appendChild(rewardCard);
+                lucide.createIcons(); // Re-render icons for newly added elements
+            });
+        }
+
+        // Function to render educational content
+        function renderEducationalContent() {
+            const educationalContentDiv = document.getElementById('educationalContent');
+            educationalContentDiv.innerHTML = ''; // Clear previous content
+
+            const content = [
+                { title: "How to Segregate Plastic Waste", content: "Learn about different plastic types (PET, HDPE, PVC, LDPE, PP, PS, Other) and how to separate them for recycling. Rinse containers, remove labels, and flatten bottles." },
+                { title: "The Lifecycle of Recycled Plastic", content: "Discover how collected plastic is processed, melted, and transformed into new products like furniture, clothing, and building materials." },
+                { title: "Reducing Your Plastic Footprint", content: "Tips on minimizing plastic use in daily life: reusable bags, water bottles, coffee cups, buying in bulk, and choosing plastic-free alternatives." }
+            ];
+
+            content.forEach((item, index) => {
+                const contentCard = document.createElement('div');
+                contentCard.className = 'bg-gray-50 p-5 rounded-lg border border-gray-200 shadow-sm';
+                contentCard.innerHTML = `
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+                        <i data-lucide="info" class="mr-2 w-5 h-5 text-teal-500"></i> ${item.title}
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">${item.content}</p>
+                `;
+                educationalContentDiv.appendChild(contentCard);
+                lucide.createIcons(); // Re-render icons for newly added elements
+            });
+        }
+
+        // Event Listeners for Tab Switching
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active styles from all buttons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('bg-green-600', 'text-white', 'shadow-md');
+                    btn.classList.add('text-gray-700', 'hover:bg-green-50');
+                });
+                // Add active styles to the clicked button
+                button.classList.add('bg-green-600', 'text-white', 'shadow-md');
+                button.classList.remove('text-gray-700', 'hover:bg-green-50');
+
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                // Show the selected tab content
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId).classList.remove('hidden');
+
+                // Render content specific to the tab if needed
+                if (tabId === 'education') {
+                    renderEducationalContent();
+                }
+            });
+        });
+
+        // Event Listener for Register Plastic Button
+        document.getElementById('btnRegisterPlastic').addEventListener('click', async () => {
+            const plasticQuantityInput = document.getElementById('plasticQuantity');
+            const quantity = parseFloat(plasticQuantityInput.value);
+
+            if (!quantity || isNaN(quantity) || quantity <= 0) {
+                showMessage('Please enter a valid plastic quantity.', true);
+                return;
+            }
+            if (!db || !currentUserId || !isAuthReady) {
+                showMessage('App not initialized. Please wait.', true);
+                return;
+            }
+
+            try {
+                const plasticRef = collection(db, `artifacts/${appId}/users/${currentUserId}/registeredPlastic`);
+                await addDoc(plasticRef, {
+                    quantity: quantity,
+                    unit: 'kg', // Assuming kg, could be dynamic
+                    status: 'pending pickup',
+                    createdAt: serverTimestamp(),
+                });
+
+                // Update reward points (mock logic: 1 point per kg)
+                const userDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/profile`, 'data');
+                const userDocSnap = await getDoc(userDocRef);
+                let currentPoints = 0;
+                if (userDocSnap.exists()) {
+                    currentPoints = userDocSnap.data().rewardPoints || 0;
+                }
+                const newPoints = currentPoints + quantity;
+                await setDoc(userDocRef, { rewardPoints: newPoints }, { merge: true }); // Use merge to update existing fields
+
+                // Add to reward history
+                const rewardsColRef = collection(db, `artifacts/${appId}/users/${currentUserId}/rewards`);
+                await addDoc(rewardsColRef, {
+                    points: quantity, // Points earned for this specific donation
+                    activity: `Plastic donation (${quantity} kg)`,
+                    timestamp: serverTimestamp(),
+                });
+
+                showMessage('Plastic quantity registered and points awarded!');
+                plasticQuantityInput.value = ''; // Clear input
+                document.getElementById('rewardPointsDisplay').textContent = newPoints; // Update display immediately
+            } catch (error) {
+                console.error("Error registering plastic:", error);
+                showMessage('Failed to register plastic. Please try again.', true);
+            }
+        });
+
+        // Event Listener for Schedule Pickup Button
+        document.getElementById('btnSchedulePickup').addEventListener('click', async () => {
+            const pickupDateInput = document.getElementById('pickupDate');
+            const pickupTimeInput = document.getElementById('pickupTime');
+            const pickupLocationInput = document.getElementById('pickupLocation');
+
+            const date = pickupDateInput.value;
+            const time = pickupTimeInput.value;
+            const location = pickupLocationInput.value;
+
+            if (!date || !time || !location) {
+                showMessage('Please fill in all pickup details.', true);
+                return;
+            }
+            if (!db || !currentUserId || !isAuthReady) {
+                showMessage('App not initialized. Please wait.', true);
+                return;
+            }
+
+            try {
+                const pickupsRef = collection(db, `artifacts/${appId}/users/${currentUserId}/pickups`);
+                await addDoc(pickupsRef, {
+                    date: date,
+                    time: time,
+                    location: location,
+                    status: 'scheduled',
+                    createdAt: serverTimestamp(),
+                });
+                showMessage('Pickup scheduled successfully!');
+                pickupDateInput.value = '';
+                pickupTimeInput.value = '';
+                pickupLocationInput.value = '';
+            } catch (error) {
+                console.error("Error scheduling pickup:", error);
+                showMessage('Failed to schedule pickup. Please try again.', true);
+            }
+        });
+
+        // Initial render of educational content when the page loads (hidden by default)
+        // It will be re-rendered when the tab is clicked.
+        renderEducationalContent();
+
+    </script>
+</body>
+</html>
