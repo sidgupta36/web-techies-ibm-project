@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlastiGen - About NGOs</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-gray-800 p-4 sm:p-6 lg:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-6 rounded-t-xl flex items-center justify-between">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i data-lucide="info" class="mr-3 w-8 h-8"></i> About Our Partner NGOs
+            </h1>
+            <!-- You might want to add a back button or link to home here -->
+        </div>
+
+        <!-- Content Area -->
+        <div class="p-6 sm:p-8 lg:p-10">
+            <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                PlastiGen partners with dedicated Non-Governmental Organizations (NGOs) who are at the forefront of the fight against plastic pollution. These organizations work tirelessly to collect, process, and transform plastic waste into valuable resources, creating a sustainable future for our planet. Learn more about some of our incredible partners below.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- NGO Card 1: GreenCycle Initiatives -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="leaf" class="w-8 h-8 text-green-600 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-900">GreenCycle Initiatives</h3>
+                    </div>
+                    <p class="text-gray-700 mb-3 leading-relaxed">
+                        **Mission:** To establish closed-loop recycling systems in urban areas, ensuring plastic waste is diverted from landfills and oceans, and reintegrated into the economy.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        **Impact:** Over 5,000 kg of plastic collected monthly, transformed into eco-friendly building materials for community projects.
+                    </p>
+                    <a href="#" class="mt-4 inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition-colors duration-200">
+                        Learn More <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- NGO Card 2: OceanGuard Collective -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="droplets" class="w-8 h-8 text-blue-600 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-900">OceanGuard Collective</h3>
+                    </div>
+                    <p class="text-gray-700 mb-3 leading-relaxed">
+                        **Mission:** Dedicated to cleaning coastal areas and oceans, preventing plastic from entering marine ecosystems, and educating local communities on sustainable waste management.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        **Impact:** Conducted 100+ beach cleanups, removing 8,000+ kg of plastic, and converting ghost fishing nets into innovative art installations.
+                    </p>
+                    <a href="#" class="mt-4 inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition-colors duration-200">
+                        Learn More <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- NGO Card 3: RePurpose Artisans -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="palette" class="w-8 h-8 text-purple-600 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-900">RePurpose Artisans</h3>
+                    </div>
+                    <p class="text-gray-700 mb-3 leading-relaxed">
+                        **Mission:** To empower marginalized communities by teaching them skills to transform plastic waste into beautiful, marketable handcrafted products, fostering economic independence.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        **Impact:** Trained 200+ artisans, created a line of recycled plastic jewelry and home decor, generating sustainable income for families.
+                    </p>
+                    <a href="#" class="mt-4 inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition-colors duration-200">
+                        Learn More <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- NGO Card 4: EcoInnovate Hub -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="lightbulb" class="w-8 h-8 text-yellow-600 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-900">EcoInnovate Hub</h3>
+                    </div>
+                    <p class="text-gray-700 mb-3 leading-relaxed">
+                        **Mission:** To research and develop new technologies for plastic recycling, focusing on hard-to-recycle plastics and creating high-value products from them.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        **Impact:** Developed a new process for recycling mixed plastics, leading to the creation of durable outdoor furniture and playground equipment for schools.
+                    </p>
+                    <a href="#" class="mt-4 inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition-colors duration-200">
+                        Learn More <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons on page load
+        window.onload = function() {
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
