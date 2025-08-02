@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlastiGen Online Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom styles for message box */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .message-box.success {
+            background-color: #d1fae5; /* green-100 */
+            color: #065f46; /* green-800 */
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* red-100 */
+            color: #991b1b; /* red-800 */
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-gray-800 p-4 sm:p-6 lg:p-8">
+
+    <!-- Message Box Element -->
+    <div id="messageBox" class="message-box text-center text-sm font-medium"></div>
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-6 rounded-t-xl flex items-center justify-between">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i data-lucide="shopping-bag" class="mr-3 w-8 h-8"></i> Online Store
+            </h1>
+            <div id="userIdDisplay" class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full flex items-center">
+                <span class="font-medium mr-2">User ID:</span>
+                <span class="truncate max-w-[150px] sm:max-w-none" id="currentUserId">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-gray-50 p-4 border-b border-gray-200">
+            <ul class="flex flex-wrap justify-center gap-2 sm:gap-4">
+                <li>
+                    <button id="tabBrowseProducts"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 bg-green-600 text-white shadow-md"
+                        data-tab="browseProducts">
+                        <i data-lucide="grid" class="mr-2 w-5 h-5"></i> Browse Products
+                    </button>
+                </li>
+                <li>
+                    <button id="tabManageProducts"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="manageProducts">
+                        <i data-lucide="pencil-ruler" class="mr-2 w-5 h-5"></i> Manage Your Products
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="p-6 sm:p-8 lg:p-10">
+            <!-- Browse Products Section -->
+            <div id="browseProducts" class="tab-content bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="store" class="mr-3 w-6 h-6 text-green-600"></i> Products Made from Recycled Plastic
+                </h2>
+                <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <p class="text-gray-600 text-center py-4 col-span-full">Loading products...</p>
+                </div>
+            </div>
+
+            <!-- Manage Products Section (NGOs only) -->
+            <div id="manageProducts" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="package-plus" class="mr-3 w-6 h-6 text-emerald-600"></i> Add New Product
+                </h2>
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label for="productName" class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                        <input type="text" id="productName" placeholder="e.g., Recycled Plastic Tote Bag"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="productDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea id="productDescription" rows="3" placeholder="e.g., A stylish and durable tote bag made from 100% recycled plastic bottles."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out"></textarea>
+                        <button id="btnEnhanceDescription"
+                            class="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center text-sm">
+                            <i data-lucide="sparkles" class="mr-2 w-4 h-4"></i> Enhance Description
+                            <span id="enhanceLoadingSpinner" class="loading-spinner hidden"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <label for="productPrice" class="block text-sm font-medium text-gray-700 mb-1">Price (USD)</label>
+                        <input type="number" id="productPrice" placeholder="e.g., 19.99" step="0.01"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="productImageUrl" class="block text-sm font-medium text-gray-700 mb-1">Image URL (Mock)</label>
+                        <input type="text" id="productImageUrl" placeholder="e.g., https://placehold.co/400x300/E5E7EB/1F2937?text=Product"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                        <p class="text-xs text-gray-500 mt-1">Note: In a real app, this would be an image upload to Firebase Storage.</p>
+                    </div>
+                    <button id="btnAddProduct"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="plus-circle" class="mr-2 w-5 h-5"></i> Add Product
+                    </button>
+                    <button id="btnAddSampleProducts"
+                        class="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="package" class="mr-2 w-5 h-5"></i> Add Sample Products
+                    </button>
+                </div>
+
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="list-checks" class="mr-3 w-6 h-6 text-lime-600"></i> Your Listed Products
+                </h2>
+                <div id="ngoProductsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <p class="text-gray-600 text-center py-4 col-span-full">No products listed yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Global variables for Firebase instances and user ID
+        let app;
+        let db;
+        let auth;
+        let currentUserId = null;
+        let isAuthReady = false; // Flag to ensure auth is ready before Firestore ops
+        let isNgo = false; // Flag to determine if the current user is an NGO
+
+        // Get app ID from global variable, default if not defined
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Function to display messages to the user (instead of alert)
+        function showMessage(msg, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = msg;
+            messageBox.className = 'message-box show'; // Reset classes
+            if (isError) {
+                messageBox.classList.add('error');
+            } else {
+                messageBox.classList.add('success');
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 5000); // Message disappears after 5 seconds
+        }
+
+        // Initialize Firebase on window load
+        window.onload = async () => {
+            try {
+                // Parse Firebase config from global variable
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        currentUserId = user.uid;
+                    } else {
+                        // Sign in anonymously if no initial auth token provided
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                        currentUserId = auth.currentUser?.uid || crypto.randomUUID(); // Fallback to random UUID
+                    }
+                    document.getElementById('currentUserId').textContent = currentUserId;
+                    isAuthReady = true; // Mark auth as ready
+                    console.log("Firebase initialized and auth state ready. User ID:", currentUserId);
+
+                    // Check if the current user is an NGO
+                    await checkNgoStatus();
+
+                    // Once auth is ready, fetch initial data and setup listeners
+                    setupRealtimeListeners();
+                });
+
+                // Initialize Lucide icons
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showMessage("Failed to initialize the app. Please check console for details.", true);
+            }
+        };
+
+        // Function to check if the current user has an NGO profile
+        async function checkNgoStatus() {
+            if (!db || !currentUserId) {
+                isNgo = false;
+                return;
+            }
+            try {
+                const ngoProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/ngoProfile`, 'data');
+                const ngoProfileSnap = await getDoc(ngoProfileDocRef);
+                isNgo = ngoProfileSnap.exists() && ngoProfileSnap.data().name !== ''; // Consider it an NGO if profile exists and has a name
+                console.log("Is current user an NGO?", isNgo);
+            } catch (error) {
+                console.error("Error checking NGO status:", error);
+                isNgo = false;
+            }
+        }
+
+        // Function to set up real-time listeners for products
+        function setupRealtimeListeners() {
+            if (!db || !currentUserId || !isAuthReady) {
+                console.log("Waiting for DB or Auth to be ready for real-time listeners.");
+                return;
+            }
+
+            // Listener for all products (for browsing)
+            const allProductsColRef = collection(db, `artifacts/${appId}/public/data/products`);
+            const qAllProducts = query(allProductsColRef, where('_deleted', '!=', true)); // Only fetch non-deleted products
+            onSnapshot(qAllProducts, (snapshot) => {
+                const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderAllProducts(products);
+            }, (error) => {
+                console.error("Error fetching all products:", error);
+                showMessage("Failed to load products for browsing.", true);
+            });
+
+            // Listener for NGO's own products (for management)
+            if (isNgo) {
+                const ngoProductsColRef = collection(db, `artifacts/${appId}/public/data/products`);
+                const qNgoProducts = query(ngoProductsColRef, where('ngoId', '==', currentUserId), where('_deleted', '!=', true));
+                onSnapshot(qNgoProducts, (snapshot) => {
+                    const myProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    renderNgoProducts(myProducts);
+                }, (error) => {
+                    console.error("Error fetching NGO's products:", error);
+                    showMessage("Failed to load your listed products.", true);
+                });
+            } else {
+                // Hide manage products tab if not an NGO
+                document.getElementById('tabManageProducts').classList.add('hidden');
+                document.getElementById('manageProducts').classList.add('hidden');
+            }
+        }
+
+        // --- Render Functions ---
+
+        function renderAllProducts(products) {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = ''; // Clear previous content
+
+            if (products.length === 0) {
+                productsGrid.innerHTML = '<p class="text-gray-600 text-center py-4 col-span-full">No products available yet.</p>';
+                return;
+            }
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300';
+                productCard.innerHTML = `
+                    <img src="${product.imageUrl || 'https://placehold.co/400x300/E5E7EB/1F2937?text=No+Image'}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl text-gray-900 mb-2">${product.name}</h3>
+                        <p class="text-gray-700 text-sm mb-3">${product.description}</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <span class="text-green-700 font-bold text-lg">$${product.price.toFixed(2)}</span>
+                            <span class="text-gray-500 text-xs">By NGO: ${product.ngoName || 'Unknown NGO'}</span>
+                        </div>
+                        <button class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+                            Buy Now (Mock)
+                        </button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        function renderNgoProducts(myProducts) {
+            const ngoProductsList = document.getElementById('ngoProductsList');
+            ngoProductsList.innerHTML = ''; // Clear previous content
+
+            if (myProducts.length === 0) {
+                ngoProductsList.innerHTML = '<p class="text-gray-600 text-center py-4 col-span-full">You have not listed any products yet.</p>';
+                return;
+            }
+
+            myProducts.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'bg-white p-4 rounded-lg shadow-md flex items-center space-x-4 border border-gray-200';
+                productItem.innerHTML = `
+                    <img src="${product.imageUrl || 'https://placehold.co/80x80/E5E7EB/1F2937?text=Product'}" alt="${product.name}" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-lg text-gray-900">${product.name}</h3>
+                        <p class="text-gray-700 text-sm">$${product.price.toFixed(2)}</p>
+                    </div>
+                    <div class="flex-shrink-0 flex space-x-2">
+                        <button data-id="${product.id}" class="text-red-500 hover:text-red-700 delete-product">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                `;
+                ngoProductsList.appendChild(productItem);
+            });
+            lucide.createIcons(); // Re-render icons for newly added elements
+            // Attach event listeners for delete buttons
+            document.querySelectorAll('.delete-product').forEach(button => {
+                button.onclick = (e) => deleteProduct(e.currentTarget.dataset.id);
+            });
+        }
+
+        // --- Delete Function ---
+        async function deleteProduct(id) {
+            if (!db || !currentUserId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+            try {
+                // Soft delete the product
+                await setDoc(doc(db, `artifacts/${appId}/public/data/products`, id), { _deleted: true, deletedAt: serverTimestamp() }, { merge: true });
+                showMessage('Product deleted successfully!');
+            } catch (error) {
+                console.error("Error deleting product:", error);
+                showMessage('Failed to delete product. Please try again.', true);
+            }
+        }
+
+        // --- Gemini API Call Function ---
+        async function enhanceProductDescription(description) {
+            const enhanceLoadingSpinner = document.getElementById('enhanceLoadingSpinner');
+            enhanceLoadingSpinner.classList.remove('hidden'); // Show spinner
+
+            try {
+                const prompt = `Rewrite the following product description to be more engaging, detailed, and SEO-friendly. Focus on the benefits of recycled plastic and environmental impact. Keep it concise but informative, around 50-100 words:\n\n"${description}"`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Leave as-is for Canvas to provide
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const enhancedText = result.candidates[0].content.parts[0].text;
+                    document.getElementById('productDescription').value = enhancedText;
+                    showMessage('Product description enhanced successfully!');
+                } else {
+                    showMessage('Failed to enhance description. No valid response from AI.', true);
+                    console.error("AI response structure unexpected:", result);
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                showMessage('Error enhancing description. Please try again.', true);
+            } finally {
+                enhanceLoadingSpinner.classList.add('hidden'); // Hide spinner
+            }
+        }
+
+
+        // --- Event Listeners ---
+
+        // Tab Switching
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('bg-green-600', 'text-white', 'shadow-md');
+                    btn.classList.add('text-gray-700', 'hover:bg-green-50');
+                });
+                button.classList.add('bg-green-600', 'text-white', 'shadow-md');
+                button.classList.remove('text-gray-700', 'hover:bg-green-50');
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId).classList.remove('hidden');
+
+                // If switching to manage products, re-check NGO status and visibility
+                if (tabId === 'manageProducts') {
+                    if (!isNgo) {
+                        showMessage('You must be registered as an NGO to manage products.', true);
+                        document.getElementById('manageProducts').classList.add('hidden');
+                        // Switch back to browse products if not an NGO
+                        document.getElementById('tabBrowseProducts').click();
+                    }
+                }
+            });
+        });
+
+        // Add Product Button
+        document.getElementById('btnAddProduct').addEventListener('click', async () => {
+            const productName = document.getElementById('productName').value.trim();
+            const productDescription = document.getElementById('productDescription').value.trim();
+            const productPrice = parseFloat(document.getElementById('productPrice').value);
+            const productImageUrl = document.getElementById('productImageUrl').value.trim();
+
+            if (!isNgo) {
+                showMessage('Only registered NGOs can add products.', true);
+                return;
+            }
+            if (!productName || !productDescription || isNaN(productPrice) || productPrice <= 0) {
+                showMessage('Please fill in all product details correctly (name, description, price).', true);
+                return;
+            }
+            if (!db || !currentUserId || !isAuthReady) { showMessage('App not initialized. Please wait.', true); return; }
+
+            try {
+                // Fetch NGO Name for the product listing
+                const ngoProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/ngoProfile`, 'data');
+                const ngoProfileSnap = await getDoc(ngoProfileDocRef);
+                const ngoName = ngoProfileSnap.exists() ? ngoProfileSnap.data().name : 'Unknown NGO';
+
+
+                const productsColRef = collection(db, `artifacts/${appId}/public/data/products`);
+                await addDoc(productsColRef, {
+                    name: productName,
+                    description: productDescription,
+                    price: productPrice,
+                    imageUrl: productImageUrl || 'https://placehold.co/400x300/E5E7EB/1F2937?text=No+Image', // Default image
+                    ngoId: currentUserId,
+                    ngoName: ngoName, // Store NGO name directly for easier display
+                    createdAt: serverTimestamp(),
+                    _deleted: false // Soft delete flag
+                });
+                showMessage('Product added successfully!');
+                document.getElementById('productName').value = '';
+                document.getElementById('productDescription').value = '';
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productImageUrl').value = '';
+            } catch (error) {
+                console.error("Error adding product:", error);
+                showMessage('Failed to add product. Please try again.', true);
+            }
+        });
+
+        // Add Sample Products Button
+        document.getElementById('btnAddSampleProducts').addEventListener('click', async () => {
+            if (!isNgo) {
+                showMessage('Only registered NGOs can add products.', true);
+                return;
+            }
+            if (!db || !currentUserId || !isAuthReady) {
+                showMessage('App not initialized. Please wait.', true);
+                return;
+            }
+
+            try {
+                // Fetch NGO Name for the product listing
+                const ngoProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/ngoProfile`, 'data');
+                const ngoProfileSnap = await getDoc(ngoProfileDocRef);
+                const ngoName = ngoProfileSnap.exists() ? ngoProfileSnap.data().name : 'Unknown NGO';
+
+                const productsColRef = collection(db, `artifacts/${appId}/public/data/products`);
+
+                const sampleProducts = [
+                    {
+                        name: "Eco-Friendly Tote Bags",
+                        description: "Stylish and durable tote bags, meticulously crafted from 100% recycled plastic, offering a sustainable alternative for your everyday needs.",
+                        price: 299.00,
+                        imageUrl: "https://placehold.co/400x300/66BB6A/FFFFFF?text=Eco-Friendly+Tote+Bags",
+                        ngoId: currentUserId,
+                        ngoName: ngoName,
+                        createdAt: serverTimestamp(),
+                        _deleted: false
+                    },
+                    {
+                        name: "Recycled Plastic Chairs",
+                        description: "Comfortable and robust chairs made entirely from recycled plastic, perfect for indoor or outdoor settings, combining sustainability with modern design.",
+                        price: 1299.00,
+                        imageUrl: "https://placehold.co/400x300/4CAF50/FFFFFF?text=Recycled+Plastic+Chairs",
+                        ngoId: currentUserId,
+                        ngoName: ngoName,
+                        createdAt: serverTimestamp(),
+                        _deleted: false
+                    },
+                    {
+                        name: "Plastic Building Bricks",
+                        description: "Innovative and strong building bricks created from repurposed plastic waste, ideal for construction projects, offering an eco-conscious and durable material.",
+                        price: 25.00,
+                        imageUrl: "https://placehold.co/400x300/8BC34A/FFFFFF?text=Plastic+Building+Bricks",
+                        ngoId: currentUserId,
+                        ngoName: ngoName,
+                        createdAt: serverTimestamp(),
+                        _deleted: false
+                    },
+                    {
+                        name: "Artistic Decorative Items",
+                        description: "Unique and vibrant decorative pieces, handcrafted from recycled plastic, adding a touch of eco-friendly artistry to any home or office space.",
+                        price: 499.00,
+                        imageUrl: "https://placehold.co/400x300/A5D6A7/FFFFFF?text=Artistic+Decorative+Items",
+                        ngoId: currentUserId,
+                        ngoName: ngoName,
+                        createdAt: serverTimestamp(),
+                        _deleted: false
+                    }
+                ];
+
+                for (const product of sampleProducts) {
+                    await addDoc(productsColRef, product);
+                }
+
+                showMessage('Sample products added successfully!');
+            } catch (error) {
+                console.error("Error adding sample products:", error);
+                showMessage('Failed to add sample products. Please try again.', true);
+            }
+        });
+
+        // Event Listener for Enhance Description Button
+        document.getElementById('btnEnhanceDescription').addEventListener('click', async () => {
+            const productDescriptionInput = document.getElementById('productDescription');
+            const currentDescription = productDescriptionInput.value.trim();
+
+            if (!isNgo) {
+                showMessage('Only registered NGOs can use this feature.', true);
+                return;
+            }
+            if (!currentDescription) {
+                showMessage('Please enter some text in the description to enhance.', true);
+                return;
+            }
+            await enhanceProductDescription(currentDescription);
+        });
+
+    </script>
+</body>
+</html>
