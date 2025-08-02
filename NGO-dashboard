@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlastiGen NGO Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom styles for message box */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .message-box.success {
+            background-color: #d1fae5; /* green-100 */
+            color: #065f46; /* green-800 */
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* red-100 */
+            color: #991b1b; /* red-800 */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-gray-800 p-4 sm:p-6 lg:p-8">
+
+    <!-- Message Box Element -->
+    <div id="messageBox" class="message-box text-center text-sm font-medium"></div>
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-6 rounded-t-xl flex items-center justify-between">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i data-lucide="building-2" class="mr-3 w-8 h-8"></i> NGO Dashboard
+            </h1>
+            <div id="ngoIdDisplay" class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full flex items-center">
+                <span class="font-medium mr-2">NGO ID:</span>
+                <span class="truncate max-w-[150px] sm:max-w-none" id="currentNgoId">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-gray-50 p-4 border-b border-gray-200">
+            <ul class="flex flex-wrap justify-center gap-2 sm:gap-4">
+                <li>
+                    <button id="tabProfileSetup"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 bg-green-600 text-white shadow-md"
+                        data-tab="profileSetup">
+                        <i data-lucide="settings" class="mr-2 w-5 h-5"></i> Profile Setup
+                    </button>
+                </li>
+                <li>
+                    <button id="tabServiceAreas"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="serviceAreas">
+                        <i data-lucide="map-pin" class="mr-2 w-5 h-5"></i> Service Areas
+                    </button>
+                </li>
+                <li>
+                    <button id="tabPickupSchedules"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="pickupSchedules">
+                        <i data-lucide="calendar-check" class="mr-2 w-5 h-5"></i> Pickup Schedules
+                    </button>
+                </li>
+                <li>
+                    <button id="tabProofOfCollection"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="proofOfCollection">
+                        <i data-lucide="camera" class="mr-2 w-5 h-5"></i> Proof of Collection
+                    </button>
+                </li>
+                <li>
+                    <button id="tabImpactUpdates"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="impactUpdates">
+                        <i data-lucide="trending-up" class="mr-2 w-5 h-5"></i> Impact Updates
+                    </button>
+                </li>
+                <li>
+                    <button id="tabDonorCommunication"
+                        class="tab-button flex items-center px-4 py-2 rounded-full font-medium transition-all duration-200 text-gray-700 hover:bg-green-50"
+                        data-tab="donorCommunication">
+                        <i data-lucide="message-square" class="mr-2 w-5 h-5"></i> Donor Communication
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="p-6 sm:p-8 lg:p-10">
+            <!-- Profile Setup Section -->
+            <div id="profileSetup" class="tab-content bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="user-cog" class="mr-3 w-6 h-6 text-green-600"></i> NGO Profile Setup
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="ngoName" class="block text-sm font-medium text-gray-700 mb-1">NGO Name</label>
+                        <input type="text" id="ngoName" placeholder="e.g., Green Earth Recyclers"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="ngoMission" class="block text-sm font-medium text-gray-700 mb-1">Mission Statement</label>
+                        <textarea id="ngoMission" rows="3" placeholder="e.g., Dedicated to transforming plastic waste into valuable resources..."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out"></textarea>
+                    </div>
+                    <div>
+                        <label for="ngoLocation" class="block text-sm font-medium text-gray-700 mb-1">Primary Location</label>
+                        <input type="text" id="ngoLocation" placeholder="e.g., New Delhi, India"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="collectionCapacity" class="block text-sm font-medium text-gray-700 mb-1">Monthly Collection Capacity (kg)</label>
+                        <input type="number" id="collectionCapacity" placeholder="e.g., 1000"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                    </div>
+                    <button id="btnSaveProfile"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="save" class="mr-2 w-5 h-5"></i> Save Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Define Service Areas Section -->
+            <div id="serviceAreas" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="map-pin" class="mr-3 w-6 h-6 text-emerald-600"></i> Define Service Areas
+                </h2>
+                <div class="space-y-4">
+                    <p class="text-gray-700">Enter pin codes or city names where your NGO operates. (For a full application, this would integrate with a map API.)</p>
+                    <div>
+                        <label for="serviceAreaInput" class="block text-sm font-medium text-gray-700 mb-1">Add Service Area (e.g., 110001, Delhi)</label>
+                        <input type="text" id="serviceAreaInput" placeholder="e.g., 110001"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <button id="btnAddServiceArea"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="plus-circle" class="mr-2 w-5 h-5"></i> Add Service Area
+                    </button>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Current Service Areas:</h3>
+                        <ul id="serviceAreaList" class="list-disc list-inside text-gray-700 space-y-1">
+                            <li class="text-gray-600">No service areas defined yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Set Pickup Schedules & Availability Section -->
+            <div id="pickupSchedules" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="calendar-check" class="mr-3 w-6 h-6 text-lime-600"></i> Set Pickup Schedules
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="scheduleDate" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <input type="date" id="scheduleDate"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="scheduleTime" class="block text-sm font-medium text-gray-700 mb-1">Time Slot</label>
+                        <input type="time" id="scheduleTime"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="maxPickups" class="block text-sm font-medium text-gray-700 mb-1">Max Pickups for this slot</label>
+                        <input type="number" id="maxPickups" placeholder="e.g., 5" min="1"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500 transition duration-150 ease-in-out">
+                    </div>
+                    <button id="btnAddSchedule"
+                        class="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="plus" class="mr-2 w-5 h-5"></i> Add Schedule
+                    </button>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Upcoming Schedules:</h3>
+                        <ul id="scheduleList" class="list-disc list-inside text-gray-700 space-y-1">
+                            <li class="text-gray-600">No schedules set yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Proof of Collection Section -->
+            <div id="proofOfCollection" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="camera" class="mr-3 w-6 h-6 text-green-600"></i> Upload Proof of Collection
+                </h2>
+                <div class="space-y-4">
+                    <p class="text-gray-700">Upload photos and log the weight of collected plastic.</p>
+                    <div>
+                        <label for="collectionWeight" class="block text-sm font-medium text-gray-700 mb-1">Collected Weight (kg)</label>
+                        <input type="number" id="collectionWeight" placeholder="e.g., 150"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="collectionPhoto" class="block text-sm font-medium text-gray-700 mb-1">Upload Photo (Mock)</label>
+                        <input type="file" id="collectionPhoto" accept="image/*"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                        <p class="text-xs text-gray-500 mt-1">Note: Photo upload is mocked; actual file storage would require Firebase Storage.</p>
+                    </div>
+                    <button id="btnUploadProof"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="upload" class="mr-2 w-5 h-5"></i> Upload Proof
+                    </button>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Recent Collections:</h3>
+                        <ul id="collectionProofList" class="list-disc list-inside text-gray-700 space-y-1">
+                            <li class="text-gray-600">No collection proofs uploaded yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Impact Updates Section -->
+            <div id="impactUpdates" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="trending-up" class="mr-3 w-6 h-6 text-emerald-600"></i> Post Impact Updates
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="impactTitle" class="block text-sm font-medium text-gray-700 mb-1">Update Title</label>
+                        <input type="text" id="impactTitle" placeholder="e.g., 50 Benches Made!"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+                    <div>
+                        <label for="impactDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea id="impactDescription" rows="4" placeholder="e.g., We successfully transformed 200kg of plastic into 50 beautiful benches for local parks..."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out"></textarea>
+                    </div>
+                    <button id="btnPostImpact"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        <i data-lucide="send" class="mr-2 w-5 h-5"></i> Post Update
+                    </button>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Your Impact Updates:</h3>
+                        <ul id="impactUpdateList" class="list-disc list-inside text-gray-700 space-y-1">
+                            <li class="text-gray-600">No impact updates posted yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communicate with Donors Section -->
+            <div id="donorCommunication" class="tab-content hidden bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                    <i data-lucide="message-square" class="mr-3 w-6 h-6 text-lime-600"></i> Communicate with Donors
+                </h2>
+                <div class="space-y-4">
+                    <p class="text-gray-700">This section would list pending pickups and allow direct messaging with donors. (Mocked interface)</p>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Pending Pickups (Mock):</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Donor: John Doe - Plastic: 10kg - Date: 2025-08-10 - <button class="text-green-500 hover:underline">Message</button></li>
+                            <li>Donor: Jane Smith - Plastic: 5kg - Date: 2025-08-12 - <button class="text-green-500 hover:underline">Message</button></li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Send General Announcement:</h3>
+                        <textarea id="announcementText" rows="3" placeholder="Type your announcement here..."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500 transition duration-150 ease-in-out"></textarea>
+                        <button id="btnSendAnnouncement"
+                            class="mt-3 w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                            <i data-lucide="mail" class="mr-2 w-5 h-5"></i> Send Announcement
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Global variables for Firebase instances and NGO ID
+        let app;
+        let db;
+        let auth;
+        let currentNgoId = null;
+        let isAuthReady = false; // Flag to ensure auth is ready before Firestore ops
+
+        // Get app ID from global variable, default if not defined
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Function to display messages to the user (instead of alert)
+        function showMessage(msg, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = msg;
+            messageBox.className = 'message-box show'; // Reset classes
+            if (isError) {
+                messageBox.classList.add('error');
+            } else {
+                messageBox.classList.add('success');
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 5000); // Message disappears after 5 seconds
+        }
+
+        // Initialize Firebase on window load
+        window.onload = async () => {
+            try {
+                // Parse Firebase config from global variable
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        currentNgoId = user.uid;
+                    } else {
+                        // Sign in anonymously if no initial auth token provided
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                        currentNgoId = auth.currentUser?.uid || crypto.randomUUID(); // Fallback to random UUID
+                    }
+                    document.getElementById('currentNgoId').textContent = currentNgoId;
+                    isAuthReady = true; // Mark auth as ready
+                    console.log("Firebase initialized and auth state ready. NGO ID:", currentNgoId);
+                    // Once auth is ready, fetch initial data and setup listeners
+                    fetchNgoProfile();
+                    setupRealtimeListeners();
+                });
+
+                // Initialize Lucide icons
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showMessage("Failed to initialize the app. Please check console for details.", true);
+            }
+        };
+
+        // Function to fetch NGO profile data
+        async function fetchNgoProfile() {
+            if (!db || !currentNgoId || !isAuthReady) {
+                console.log("Waiting for DB or Auth to be ready for NGO profile fetch.");
+                return;
+            }
+            try {
+                const ngoDocRef = doc(db, `artifacts/${appId}/users/${currentNgoId}/ngoProfile`, 'data');
+                const ngoDocSnap = await getDoc(ngoDocRef);
+                if (ngoDocSnap.exists()) {
+                    const ngoData = ngoDocSnap.data();
+                    document.getElementById('ngoName').value = ngoData.name || '';
+                    document.getElementById('ngoMission').value = ngoData.mission || '';
+                    document.getElementById('ngoLocation').value = ngoData.location || '';
+                    document.getElementById('collectionCapacity').value = ngoData.collectionCapacity || '';
+                } else {
+                    // Create a default profile if it doesn't exist
+                    await setDoc(ngoDocRef, {
+                        name: '',
+                        mission: '',
+                        location: '',
+                        collectionCapacity: 0,
+                        createdAt: serverTimestamp()
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching NGO profile:", error);
+                showMessage("Failed to load NGO profile.", true);
+            }
+        }
+
+        // Function to set up real-time listeners for service areas, schedules, proofs, and updates
+        function setupRealtimeListeners() {
+            if (!db || !currentNgoId || !isAuthReady) {
+                console.log("Waiting for DB or Auth to be ready for real-time listeners.");
+                return;
+            }
+
+            // Real-time listener for Service Areas
+            const serviceAreasColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/serviceAreas`);
+            onSnapshot(serviceAreasColRef, (snapshot) => {
+                const areas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderServiceAreas(areas);
+            }, (error) => {
+                console.error("Error fetching service areas:", error);
+                showMessage("Failed to load service areas in real-time.", true);
+            });
+
+            // Real-time listener for Pickup Schedules
+            const schedulesColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/pickupSchedules`);
+            onSnapshot(schedulesColRef, (snapshot) => {
+                const schedules = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderPickupSchedules(schedules.sort((a, b) => {
+                    const dateA = new Date(`${a.date}T${a.time}`);
+                    const dateB = new Date(`${b.date}T${b.time}`);
+                    return dateA - dateB;
+                })); // Sort by upcoming date/time
+            }, (error) => {
+                console.error("Error fetching pickup schedules:", error);
+                showMessage("Failed to load pickup schedules in real-time.", true);
+            });
+
+            // Real-time listener for Collection Proofs
+            const proofsColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/collectionProofs`);
+            onSnapshot(proofsColRef, (snapshot) => {
+                const proofs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderCollectionProofs(proofs.sort((a, b) => (b.createdAt?.toDate() || 0) - (a.createdAt?.toDate() || 0))); // Sort by most recent
+            }, (error) => {
+                console.error("Error fetching collection proofs:", error);
+                showMessage("Failed to load collection proofs in real-time.", true);
+            });
+
+            // Real-time listener for Impact Updates
+            const updatesColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/impactUpdates`);
+            onSnapshot(updatesColRef, (snapshot) => {
+                const updates = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderImpactUpdates(updates.sort((a, b) => (b.createdAt?.toDate() || 0) - (a.createdAt?.toDate() || 0))); // Sort by most recent
+            }, (error) => {
+                console.error("Error fetching impact updates:", error);
+                showMessage("Failed to load impact updates in real-time.", true);
+            });
+        }
+
+        // --- Render Functions ---
+
+        function renderServiceAreas(areas) {
+            const serviceAreaList = document.getElementById('serviceAreaList');
+            serviceAreaList.innerHTML = '';
+            if (areas.length === 0) {
+                serviceAreaList.innerHTML = '<li class="text-gray-600">No service areas defined yet.</li>';
+                return;
+            }
+            areas.forEach(area => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between';
+                li.innerHTML = `
+                    <span>${area.name}</span>
+                    <button data-id="${area.id}" class="text-red-500 hover:text-red-700 ml-2 delete-service-area">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                `;
+                serviceAreaList.appendChild(li);
+            });
+            lucide.createIcons();
+            // Attach event listeners for delete buttons
+            document.querySelectorAll('.delete-service-area').forEach(button => {
+                button.onclick = (e) => deleteServiceArea(e.currentTarget.dataset.id);
+            });
+        }
+
+        function renderPickupSchedules(schedules) {
+            const scheduleList = document.getElementById('scheduleList');
+            scheduleList.innerHTML = '';
+            if (schedules.length === 0) {
+                scheduleList.innerHTML = '<li class="text-gray-600">No schedules set yet.</li>';
+                return;
+            }
+            schedules.forEach(schedule => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between';
+                li.innerHTML = `
+                    <span>${schedule.date} at ${schedule.time} (Max: ${schedule.maxPickups})</span>
+                    <button data-id="${schedule.id}" class="text-red-500 hover:text-red-700 ml-2 delete-schedule">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                `;
+                scheduleList.appendChild(li);
+            });
+            lucide.createIcons();
+            // Attach event listeners for delete buttons
+            document.querySelectorAll('.delete-schedule').forEach(button => {
+                button.onclick = (e) => deletePickupSchedule(e.currentTarget.dataset.id);
+            });
+        }
+
+        function renderCollectionProofs(proofs) {
+            const collectionProofList = document.getElementById('collectionProofList');
+            collectionProofList.innerHTML = '';
+            if (proofs.length === 0) {
+                collectionProofList.innerHTML = '<li class="text-gray-600">No collection proofs uploaded yet.</li>';
+                return;
+            }
+            proofs.forEach(proof => {
+                const formattedDate = proof.createdAt?.toDate ? proof.createdAt.toDate().toLocaleString() : 'N/A';
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between';
+                li.innerHTML = `
+                    <span>Weight: ${proof.weight} kg (Uploaded: ${formattedDate})</span>
+                    <button data-id="${proof.id}" class="text-red-500 hover:text-red-700 ml-2 delete-proof">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                `;
+                collectionProofList.appendChild(li);
+            });
+            lucide.createIcons();
+            // Attach event listeners for delete buttons
+            document.querySelectorAll('.delete-proof').forEach(button => {
+                button.onclick = (e) => deleteCollectionProof(e.currentTarget.dataset.id);
+            });
+        }
+
+        function renderImpactUpdates(updates) {
+            const impactUpdateList = document.getElementById('impactUpdateList');
+            impactUpdateList.innerHTML = '';
+            if (updates.length === 0) {
+                impactUpdateList.innerHTML = '<li class="text-gray-600">No impact updates posted yet.</li>';
+                return;
+            }
+            updates.forEach(update => {
+                const formattedDate = update.createdAt?.toDate ? update.createdAt.toDate().toLocaleString() : 'N/A';
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between';
+                li.innerHTML = `
+                    <span><strong>${update.title}</strong>: ${update.description} (Posted: ${formattedDate})</span>
+                    <button data-id="${update.id}" class="text-red-500 hover:text-red-700 ml-2 delete-update">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                `;
+                impactUpdateList.appendChild(li);
+            });
+            lucide.createIcons();
+            // Attach event listeners for delete buttons
+            document.querySelectorAll('.delete-update').forEach(button => {
+                button.onclick = (e) => deleteImpactUpdate(e.currentTarget.dataset.id);
+            });
+        }
+
+        // --- Delete Functions ---
+        async function deleteServiceArea(id) {
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+            try {
+                await setDoc(doc(db, `artifacts/${appId}/users/${currentNgoId}/serviceAreas`, id), { _deleted: true }, { merge: true });
+                showMessage('Service area deleted.');
+            } catch (error) { console.error("Error deleting service area:", error); showMessage('Failed to delete service area.', true); }
+        }
+
+        async function deletePickupSchedule(id) {
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+            try {
+                await setDoc(doc(db, `artifacts/${appId}/users/${currentNgoId}/pickupSchedules`, id), { _deleted: true }, { merge: true });
+                showMessage('Pickup schedule deleted.');
+            } catch (error) { console.error("Error deleting schedule:", error); showMessage('Failed to delete schedule.', true); }
+        }
+
+        async function deleteCollectionProof(id) {
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+            try {
+                await setDoc(doc(db, `artifacts/${appId}/users/${currentNgoId}/collectionProofs`, id), { _deleted: true }, { merge: true });
+                showMessage('Collection proof deleted.');
+            } catch (error) { console.error("Error deleting proof:", error); showMessage('Failed to delete proof.', true); }
+        }
+
+        async function deleteImpactUpdate(id) {
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+            try {
+                await setDoc(doc(db, `artifacts/${appId}/users/${currentNgoId}/impactUpdates`, id), { _deleted: true }, { merge: true });
+                showMessage('Impact update deleted.');
+            } catch (error) { console.error("Error deleting update:", error); showMessage('Failed to delete update.', true); }
+        }
+
+
+        // --- Event Listeners ---
+
+        // Tab Switching
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('bg-green-600', 'text-white', 'shadow-md');
+                    btn.classList.add('text-gray-700', 'hover:bg-green-50');
+                });
+                button.classList.add('bg-green-600', 'text-white', 'shadow-md');
+                button.classList.remove('text-gray-700', 'hover:bg-green-50');
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId).classList.remove('hidden');
+            });
+        });
+
+        // Save Profile Button
+        document.getElementById('btnSaveProfile').addEventListener('click', async () => {
+            const name = document.getElementById('ngoName').value.trim();
+            const mission = document.getElementById('ngoMission').value.trim();
+            const location = document.getElementById('ngoLocation').value.trim();
+            const capacity = parseFloat(document.getElementById('collectionCapacity').value);
+
+            if (!name || !mission || !location || isNaN(capacity) || capacity <= 0) {
+                showMessage('Please fill in all profile fields correctly.', true);
+                return;
+            }
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+
+            try {
+                const ngoDocRef = doc(db, `artifacts/${appId}/users/${currentNgoId}/ngoProfile`, 'data');
+                await setDoc(ngoDocRef, {
+                    name: name,
+                    mission: mission,
+                    location: location,
+                    collectionCapacity: capacity,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                showMessage('NGO Profile saved successfully!');
+            } catch (error) {
+                console.error("Error saving profile:", error);
+                showMessage('Failed to save profile. Please try again.', true);
+            }
+        });
+
+        // Add Service Area Button
+        document.getElementById('btnAddServiceArea').addEventListener('click', async () => {
+            const serviceAreaInput = document.getElementById('serviceAreaInput');
+            const areaName = serviceAreaInput.value.trim();
+
+            if (!areaName) {
+                showMessage('Please enter a service area.', true);
+                return;
+            }
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+
+            try {
+                const serviceAreasColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/serviceAreas`);
+                await addDoc(serviceAreasColRef, {
+                    name: areaName,
+                    createdAt: serverTimestamp(),
+                    _deleted: false // Soft delete flag
+                });
+                showMessage('Service area added!');
+                serviceAreaInput.value = '';
+            } catch (error) {
+                console.error("Error adding service area:", error);
+                showMessage('Failed to add service area. Please try again.', true);
+            }
+        });
+
+        // Add Schedule Button
+        document.getElementById('btnAddSchedule').addEventListener('click', async () => {
+            const scheduleDate = document.getElementById('scheduleDate').value;
+            const scheduleTime = document.getElementById('scheduleTime').value;
+            const maxPickups = parseInt(document.getElementById('maxPickups').value);
+
+            if (!scheduleDate || !scheduleTime || isNaN(maxPickups) || maxPickups <= 0) {
+                showMessage('Please fill in all schedule details correctly.', true);
+                return;
+            }
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+
+            try {
+                const schedulesColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/pickupSchedules`);
+                await addDoc(schedulesColRef, {
+                    date: scheduleDate,
+                    time: scheduleTime,
+                    maxPickups: maxPickups,
+                    availableSlots: maxPickups, // Initially available slots are max pickups
+                    createdAt: serverTimestamp(),
+                    _deleted: false // Soft delete flag
+                });
+                showMessage('Pickup schedule added!');
+                document.getElementById('scheduleDate').value = '';
+                document.getElementById('scheduleTime').value = '';
+                document.getElementById('maxPickups').value = '';
+            } catch (error) {
+                console.error("Error adding schedule:", error);
+                showMessage('Failed to add schedule. Please try again.', true);
+            }
+        });
+
+        // Upload Proof Button
+        document.getElementById('btnUploadProof').addEventListener('click', async () => {
+            const collectionWeight = parseFloat(document.getElementById('collectionWeight').value);
+            const collectionPhoto = document.getElementById('collectionPhoto').files[0]; // Get the file object
+
+            if (isNaN(collectionWeight) || collectionWeight <= 0) {
+                showMessage('Please enter a valid collected weight.', true);
+                return;
+            }
+            if (!collectionPhoto) {
+                showMessage('Please select a photo to upload.', true);
+                return;
+            }
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+
+            // In a real app, you would upload the photo to Firebase Storage here
+            // and get a URL. For this example, we'll just mock the photo URL.
+            const mockPhotoUrl = `https://placehold.co/150x100/A855F7/FFFFFF?text=Proof`; // Example placeholder
+
+            try {
+                const proofsColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/collectionProofs`);
+                await addDoc(proofsColRef, {
+                    weight: collectionWeight,
+                    photoUrl: mockPhotoUrl, // Store mock URL
+                    createdAt: serverTimestamp(),
+                    _deleted: false // Soft delete flag
+                });
+                showMessage('Collection proof uploaded!');
+                document.getElementById('collectionWeight').value = '';
+                document.getElementById('collectionPhoto').value = ''; // Clear file input
+            } catch (error) {
+                console.error("Error uploading proof:", error);
+                showMessage('Failed to upload proof. Please try again.', true);
+            }
+        });
+
+        // Post Impact Update Button
+        document.getElementById('btnPostImpact').addEventListener('click', async () => {
+            const impactTitle = document.getElementById('impactTitle').value.trim();
+            const impactDescription = document.getElementById('impactDescription').value.trim();
+
+            if (!impactTitle || !impactDescription) {
+                showMessage('Please fill in both title and description for the impact update.', true);
+                return;
+            }
+            if (!db || !currentNgoId || !isAuthReady) { showMessage('App not initialized.', true); return; }
+
+            try {
+                const updatesColRef = collection(db, `artifacts/${appId}/users/${currentNgoId}/impactUpdates`);
+                await addDoc(updatesColRef, {
+                    title: impactTitle,
+                    description: impactDescription,
+                    createdAt: serverTimestamp(),
+                    _deleted: false // Soft delete flag
+                });
+                showMessage('Impact update posted!');
+                document.getElementById('impactTitle').value = '';
+                document.getElementById('impactDescription').value = '';
+            } catch (error) {
+                console.error("Error posting impact update:", error);
+                showMessage('Failed to post impact update. Please try again.', true);
+            }
+        });
+
+        // Send Announcement Button (Mocked)
+        document.getElementById('btnSendAnnouncement').addEventListener('click', () => {
+            const announcementText = document.getElementById('announcementText').value.trim();
+            if (announcementText) {
+                showMessage('Announcement sent to all donors (mocked).');
+                document.getElementById('announcementText').value = '';
+            } else {
+                showMessage('Please type an announcement.', true);
+            }
+        });
+
+    </script>
+</body>
+</html>
