@@ -1,0 +1,1868 @@
+/* Dashboard Sections */
+        .user-dashboard, .ngo-dashboard, .shop-section {
+            background: white;
+            padding: 4rem 0;
+            min-height: 80vh;
+        }
+
+        .dashboard-content {
+            margin-top: 2rem;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            color: #4caf50;
+            border-bottom-color: #4caf50;
+        }
+
+        .tab-content,
+        .ngo-tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active,
+        .ngo-tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Styles */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .plastic-form,
+        .ngo-form,
+        .proof-form,
+        .impact-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 800px;
+        }
+
+        .pickup-scheduler,
+        .profile-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        /* Pickup Tracking */
+        .pickup-history {
+            margin-top: 2rem;
+        }
+
+        .pickup-item,
+        .proof-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4caf50;
+        }
+
+        .pickup-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .pickup-id {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pickup-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .pickup-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Rewards Section */
+        .rewards-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .points-card {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .points-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .points-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .rewards-history {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .reward-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .reward-item:last-child {
+            border-bottom: none;
+        }
+
+        .reward-item span:first-child {
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .education-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .education-card h4 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .education-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* NGO Dashboard Specific */
+        .map-container {
+            margin: 2rem 0;
+        }
+
+        .map-placeholder {
+            background: #f0f0f0;
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #666;
+        }
+
+        .map-placeholder p {
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .service-list {
+            margin-top: 2rem;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-remove {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .pickup-request {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-info {
+            flex: 1;
+        }
+
+        .requester {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .request-details {
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .request-address {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Shop Section */
+        .shop-filters {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filter-group select {
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card-detailed {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card-detailed:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image-detailed {
+            height: 200px;
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .product-info-detailed {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-ngo {
+            color: #4caf50;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .product-impact {
+            color: #4caf50;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .product-price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .shopping-cart {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .cart-items {
+            margin: 1rem 0;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        /* Responsive Design Updates */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .rewards-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .shop-filters {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .dashboard-tabs {
+                flex-direction: column;
+            }
+
+            .pickup-request {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .request-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlastiGen - Turn Plastic Waste Into Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Header - Priority Styles */
+        header {
+            background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+            color: white !important;
+            padding: 1rem 0 !important;
+            position: fixed !important;
+            width: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 1000 !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        nav {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+            padding: 0 20px !important;
+        }
+
+        .logo {
+            font-size: 1.8rem !important;
+            font-weight: bold !important;
+            color: white !important;
+            display: block !important;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+            color: white !important;
+            padding: 1rem 0 !important;
+            position: fixed !important;
+            width: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 1000 !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        nav {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+            padding: 0 20px !important;
+        }
+
+        .logo {
+            font-size: 1.8rem !important;
+            font-weight: bold !important;
+            color: white !important;
+            display: block !important;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-signup {
+            background: white;
+            color: #4caf50;
+            border: 2px solid white;
+        }
+
+        .btn-login:hover {
+            background: white;
+            color: #4caf50;
+        }
+
+        .btn-signup:hover {
+            background: transparent;
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e8f5e8, #f1f8f1);
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2c8a3e;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+        }
+
+        .btn-green {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        /* Impact Stats */
+        .impact-stats {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Featured NGOs */
+        .featured-ngos {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .ngo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .ngo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .ngo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ngo-image {
+            height: 200px;
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .ngo-content {
+            padding: 1.5rem;
+        }
+
+        .ngo-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .ngo-description {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .ngo-impact {
+            color: #4caf50;
+            font-weight: 500;
+        }
+
+        /* Plastic Harms Section */
+        .plastic-harms {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .harms-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .harms-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .harms-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .harms-list li {
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .harms-list li:before {
+            content: "⚠️ ";
+            margin-right: 0.5rem;
+        }
+
+        .harms-visual {
+            text-align: center;
+            font-size: 6rem;
+        }
+
+        /* Dashboard Previews */
+        .dashboard-previews {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .dashboard-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        .feature-list li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Online Store */
+        .online-store {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: #4caf50;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #4caf50;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: #4caf50;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .harms-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div style="position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(135deg, #4caf50, #66bb6a); z-index: 1000; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 28px; font-weight: bold; color: white;">PlastiGen</div>
+            <div style="display: flex; gap: 50px; list-style: none;">
+                <a href="#home" style="color: white; text-decoration: none; font-weight: 500; font-size: 16px;">Home</a>
+                <a href="#user-dashboard" style="color: white; text-decoration: none; font-weight: 500; font-size: 16px;">User Dashboard</a>
+                <a href="#ngo-dashboard" style="color: white; text-decoration: none; font-weight: 500; font-size: 16px;">NGO Dashboard</a>
+                <a href="#shop" style="color: white; text-decoration: none; font-weight: 500; font-size: 16px;">Shop</a>
+                <a href="#ngos" style="color: white; text-decoration: none; font-weight: 500; font-size: 16px;">About NGOs</a>
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <button onclick="openModal('loginModal')" style="padding: 12px 30px; background: transparent; color: white; border: 2px solid white; border-radius: 25px; cursor: pointer; font-weight: 500; font-size: 16px;">Login</button>
+                <button onclick="openModal('registerModal')" style="padding: 12px 30px; background: white; color: #4caf50; border: 2px solid white; border-radius: 25px; cursor: pointer; font-weight: 500; font-size: 16px;">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>Turn your plastic waste into a better future</h1>
+                <p>Join our community of environmentally conscious individuals and NGOs working together to reduce plastic pollution through innovative recycling solutions.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-green btn-large" onclick="openModal('donateModal')">Donate Your Plastic</a>
+                    <a href="#" class="btn btn-outline btn-large" onclick="openModal('ngoModal')">Join as NGO</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Stats -->
+        <section class="impact-stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="plasticRecycled">12,000</div>
+                        <div class="stat-label">KG Plastic Recycled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeNGOs">45</div>
+                        <div class="stat-label">Active NGOs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="productsCreated">2,850</div>
+                        <div class="stat-label">Products Created</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="usersJoined">8,200</div>
+                        <div class="stat-label">Users Joined</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured NGO Stories -->
+        <section class="featured-ngos" id="ngos">
+            <div class="container">
+                <h2 class="section-title">Featured NGO Stories</h2>
+                <div class="ngo-grid">
+                    <div class="ngo-card">
+                        <div class="ngo-image">🌱</div>
+                        <div class="ngo-content">
+                            <div class="ngo-name">EcoWarriors Foundation</div>
+                            <div class="ngo-description">Transforming plastic waste into sustainable building materials for rural communities.</div>
+                            <div class="ngo-impact">Impact: 500+ homes built with recycled plastic bricks</div>
+                        </div>
+                    </div>
+                    <div class="ngo-card">
+                        <div class="ngo-image">♻️</div>
+                        <div class="ngo-content">
+                            <div class="ngo-name">Green Revolution NGO</div>
+                            <div class="ngo-description">Creating beautiful handicrafts and bags from collected plastic waste.</div>
+                            <div class="ngo-impact">Impact: 10,000+ eco-friendly bags produced</div>
+                        </div>
+                    </div>
+                    <div class="ngo-card">
+                        <div class="ngo-image">🌍</div>
+                        <div class="ngo-content">
+                            <div class="ngo-name">Clean Earth Initiative</div>
+                            <div class="ngo-description">Converting plastic bottles into playground equipment for schools.</div>
+                            <div class="ngo-impact">Impact: 50+ school playgrounds created</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Harms of Plastic -->
+        <section class="plastic-harms">
+            <div class="container">
+                <div class="harms-content">
+                    <div class="harms-text">
+                        <h2>The Plastic Crisis</h2>
+                        <ul class="harms-list">
+                            <li>8 million tons of plastic enter oceans annually</li>
+                            <li>Plastic takes 400+ years to decompose</li>
+                            <li>Microplastics contaminate food chain</li>
+                            <li>Marine life threatened by plastic pollution</li>
+                            <li>Landfills overflow with plastic waste</li>
+                        </ul>
+                        <p>Together, we can turn this crisis into an opportunity for sustainable solutions.</p>
+                    </div>
+                    <div class="harms-visual">🌊🐢💔</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Dashboard Section -->
+        <section class="user-dashboard" id="user-dashboard">
+            <div class="container">
+                <h2 class="section-title">User Dashboard</h2>
+                <div class="dashboard-content">
+                    <div class="dashboard-tabs">
+                        <button class="tab-btn active" onclick="showTab('register-plastic')">Register Plastic</button>
+                        <button class="tab-btn" onclick="showTab('schedule-pickup')">Schedule Pickup</button>
+                        <button class="tab-btn" onclick="showTab('track-pickup')">Track Status</button>
+                        <button class="tab-btn" onclick="showTab('rewards')">My Rewards</button>
+                        <button class="tab-btn" onclick="showTab('education')">Learn</button>
+                    </div>
+
+                    <!-- Register Plastic Tab -->
+                    <div id="register-plastic" class="tab-content active">
+                        <div class="registration-form">
+                            <h3>Register Your Plastic Waste</h3>
+                            <form class="plastic-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="plastic-type">Plastic Type</label>
+                                        <select id="plastic-type" required>
+                                            <option value="">Select Type</option>
+                                            <option value="pet-bottles">PET Bottles</option>
+                                            <option value="hdpe-containers">HDPE Containers</option>
+                                            <option value="plastic-bags">Plastic Bags</option>
+                                            <option value="food-packaging">Food Packaging</option>
+                                            <option value="mixed">Mixed Plastic</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quantity">Estimated Weight (kg)</label>
+                                        <input type="number" id="quantity" min="0.1" step="0.1" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="photo-upload">Upload Photos</label>
+                                    <input type="file" id="photo-upload" multiple accept="image/*">
+                                    <small>Upload photos to help NGOs assess the waste</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="notes">Additional Notes</label>
+                                    <textarea id="notes" rows="3" placeholder="Any special instructions or details..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-green">Register Plastic Waste</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Schedule Pickup Tab -->
+                    <div id="schedule-pickup" class="tab-content">
+                        <div class="pickup-scheduler">
+                            <h3>Schedule Pickup</h3>
+                            <div class="pickup-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pickup-date">Preferred Date</label>
+                                        <input type="date" id="pickup-date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pickup-time">Time Slot</label>
+                                        <select id="pickup-time" required>
+                                            <option value="">Select Time</option>
+                                            <option value="9-11">9:00 AM - 11:00 AM</option>
+                                            <option value="11-13">11:00 AM - 1:00 PM</option>
+                                            <option value="14-16">2:00 PM - 4:00 PM</option>
+                                            <option value="16-18">4:00 PM - 6:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pickup-address">Pickup Address</label>
+                                    <textarea id="pickup-address" rows="3" placeholder="Enter complete address with landmarks..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-number">Contact Number</label>
+                                    <input type="tel" id="contact-number" placeholder="Your mobile number">
+                                </div>
+                                <button type="submit" class="btn btn-green">Schedule Pickup</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Track Pickup Tab -->
+                    <div id="track-pickup" class="tab-content">
+                        <div class="tracking-section">
+                            <h3>Track Your Pickups</h3>
+                            <div class="pickup-history">
+                                <div class="pickup-item">
+                                    <div class="pickup-info">
+                                        <div class="pickup-id">Pickup #PG2025001</div>
+                                        <div class="pickup-date">Scheduled: Jan 15, 2025 - 2:00 PM</div>
+                                        <div class="pickup-status status-confirmed">✓ Confirmed</div>
+                                    </div>
+                                    <div class="pickup-details">5kg Mixed Plastic | Address: Sector 15, Noida</div>
+                                </div>
+                                <div class="pickup-item">
+                                    <div class="pickup-info">
+                                        <div class="pickup-id">Pickup #PG2025002</div>
+                                        <div class="pickup-date">Scheduled: Jan 20, 2025 - 11:00 AM</div>
+                                        <div class="pickup-status status-pending">⏳ Pending</div>
+                                    </div>
+                                    <div class="pickup-details">3kg PET Bottles | Address: CP, Delhi</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rewards Tab -->
+                    <div id="rewards" class="tab-content">
+                        <div class="rewards-section">
+                            <h3>My Reward Points</h3>
+                            <div class="rewards-overview">
+                                <div class="points-card">
+                                    <div class="points-number">1,250</div>
+                                    <div class="points-label">Total Points Earned</div>
+                                </div>
+                                <div class="points-card">
+                                    <div class="points-number">350</div>
+                                    <div class="points-label">Available Points</div>
+                                </div>
+                            </div>
+                            <div class="rewards-history">
+                                <h4>Recent Activity</h4>
+                                <div class="reward-item">
+                                    <span>+100 points</span> - 5kg plastic donation (Jan 15)
+                                </div>
+                                <div class="reward-item">
+                                    <span>-200 points</span> - Redeemed eco-bag (Jan 10)
+                                </div>
+                                <div class="reward-item">
+                                    <span>+80 points</span> - 4kg plastic donation (Jan 8)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Tab -->
+                    <div id="education" class="tab-content">
+                        <div class="education-section">
+                            <h3>Learn About Plastic Recycling</h3>
+                            <div class="education-grid">
+                                <div class="education-card">
+                                    <h4>🔍 Plastic Identification</h4>
+                                    <p>Learn to identify different types of plastic and their recycling codes.</p>
+                                    <a href="#" class="btn btn-outline">Learn More</a>
+                                </div>
+                                <div class="education-card">
+                                    <h4>♻️ Proper Segregation</h4>
+                                    <p>Best practices for cleaning and sorting plastic waste before donation.</p>
+                                    <a href="#" class="btn btn-outline">Watch Video</a>
+                                </div>
+                                <div class="education-card">
+                                    <h4>🌍 Environmental Impact</h4>
+                                    <p>Understand how your contribution helps reduce environmental pollution.</p>
+                                    <a href="#" class="btn btn-outline">Read Article</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NGO Dashboard Section -->
+        <section class="ngo-dashboard" id="ngo-dashboard">
+            <div class="container">
+                <h2 class="section-title">NGO Dashboard</h2>
+                <div class="dashboard-content">
+                    <div class="dashboard-tabs">
+                        <button class="tab-btn active" onclick="showNGOTab('profile-setup')">Profile Setup</button>
+                        <button class="tab-btn" onclick="showNGOTab('service-areas')">Service Areas</button>
+                        <button class="tab-btn" onclick="showNGOTab('pickup-management')">Pickup Management</button>
+                        <button class="tab-btn" onclick="showNGOTab('collection-proof')">Collection Proof</button>
+                        <button class="tab-btn" onclick="showNGOTab('impact-updates')">Impact Updates</button>
+                    </div>
+
+                    <!-- Profile Setup Tab -->
+                    <div id="profile-setup" class="ngo-tab-content active">
+                        <div class="profile-form">
+                            <h3>Organization Profile</h3>
+                            <form class="ngo-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="org-name">Organization Name</label>
+                                        <input type="text" id="org-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="registration-number">Registration Number</label>
+                                        <input type="text" id="registration-number" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mission-statement">Mission Statement</label>
+                                    <textarea id="mission-statement" rows="4" placeholder="Describe your organization's mission and goals..."></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="collection-capacity">Monthly Collection Capacity (kg)</label>
+                                        <input type="number" id="collection-capacity" min="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="team-size">Team Size</label>
+                                        <input type="number" id="team-size" min="1" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="certifications">Upload Certifications</label>
+                                    <input type="file" id="certifications" multiple accept=".pdf,.jpg,.png">
+                                </div>
+                                <button type="submit" class="btn btn-green">Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Service Areas Tab -->
+                    <div id="service-areas" class="ngo-tab-content">
+                        <div class="service-areas-section">
+                            <h3>Define Service Areas</h3>
+                            <div class="map-container">
+                                <div class="map-placeholder">
+                                    🗺️ Interactive Map
+                                    <p>Click on the map to mark your service areas</p>
+                                    <div class="map-controls">
+                                        <button class="btn btn-outline">Add Service Area</button>
+                                        <button class="btn btn-outline">Set Coverage Radius</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-list">
+                                <h4>Current Service Areas</h4>
+                                <div class="service-item">
+                                    <span>📍 Sector 15, Noida - 5km radius</span>
+                                    <button class="btn-remove">Remove</button>
+                                </div>
+                                <div class="service-item">
+                                    <span>📍 Connaught Place, Delhi - 3km radius</span>
+                                    <button class="btn-remove">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Management Tab -->
+                    <div id="pickup-management" class="ngo-tab-content">
+                        <div class="pickup-management">
+                            <h3>Manage Pickup Schedules</h3>
+                            <div class="schedule-controls">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="available-days">Available Days</label>
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" value="monday"> Monday</label>
+                                            <label><input type="checkbox" value="tuesday"> Tuesday</label>
+                                            <label><input type="checkbox" value="wednesday"> Wednesday</label>
+                                            <label><input type="checkbox" value="thursday"> Thursday</label>
+                                            <label><input type="checkbox" value="friday"> Friday</label>
+                                            <label><input type="checkbox" value="saturday"> Saturday</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pending-pickups">
+                                <h4>Pending Pickup Requests</h4>
+                                <div class="pickup-request">
+                                    <div class="request-info">
+                                        <div class="requester">User: John Doe</div>
+                                        <div class="request-details">5kg Mixed Plastic | Jan 20, 2025 - 2:00 PM</div>
+                                        <div class="request-address">Address: Sector 18, Noida</div>
+                                    </div>
+                                    <div class="request-actions">
+                                        <button class="btn btn-green">Accept</button>
+                                        <button class="btn btn-outline">Decline</button>
+                                    </div>
+                                </div>
+                                <div class="pickup-request">
+                                    <div class="request-info">
+                                        <div class="requester">User: Sarah Smith</div>
+                                        <div class="request-details">3kg PET Bottles | Jan 22, 2025 - 11:00 AM</div>
+                                        <div class="request-address">Address: Karol Bagh, Delhi</div>
+                                    </div>
+                                    <div class="request-actions">
+                                        <button class="btn btn-green">Accept</button>
+                                        <button class="btn btn-outline">Decline</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collection Proof Tab -->
+                    <div id="collection-proof" class="ngo-tab-content">
+                        <div class="collection-proof">
+                            <h3>Upload Collection Proof</h3>
+                            <form class="proof-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="collection-date">Collection Date</label>
+                                        <input type="date" id="collection-date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="total-weight">Total Weight Collected (kg)</label>
+                                        <input type="number" id="total-weight" min="0.1" step="0.1" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="collection-photos">Upload Photos</label>
+                                    <input type="file" id="collection-photos" multiple accept="image/*" required>
+                                    <small>Upload before, during, and after photos of collection</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight-logs">Weight Verification Log</label>
+                                    <textarea id="weight-logs" rows="4" placeholder="Detailed breakdown of collected materials..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-green">Submit Collection Proof</button>
+                            </form>
+                            <div class="proof-history">
+                                <h4>Recent Submissions</h4>
+                                <div class="proof-item">
+                                    <span>Jan 15, 2025 - 25kg collected</span>
+                                    <span class="status-approved">✓ Verified</span>
+                                </div>
+                                <div class="proof-item">
+                                    <span>Jan 10, 2025 - 18kg collected</span>
+                                    <span class="status-pending">⏳ Under Review</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Impact Updates Tab -->
+                    <div id="impact-updates" class="ngo-tab-content">
+                        <div class="impact-updates">
+                            <h3>Share Impact Stories</h3>
+                            <form class="impact-form">
+                                <div class="form-group">
+                                    <label for="story-title">Story Title</label>
+                                    <input type="text" id="story-title" placeholder="e.g., 'Built 10 benches from recycled plastic'" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="story-description">Story Description</label>
+                                    <textarea id="story-description" rows="5" placeholder="Share the details of your impact story..."></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="plastic-used">Plastic Used (kg)</label>
+                                        <input type="number" id="plastic-used" min="0.1" step="0.1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="products-created">Products Created</label>
+                                        <input type="number" id="products-created" min="1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="impact-photos">Upload Photos</label>
+                                    <input type="file" id="impact-photos" multiple accept="image/*">
+                                </div>
+                                <button type="submit" class="btn btn-green">Share Impact Story</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section class="shop-section" id="shop">
+            <div class="container">
+                <h2 class="section-title">Shop Recycled Products</h2>
+                <div class="shop-filters">
+                    <div class="filter-group">
+                        <label for="category-filter">Category:</label>
+                        <select id="category-filter">
+                            <option value="all">All Products</option>
+                            <option value="bags">Bags & Accessories</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="construction">Construction Materials</option>
+                            <option value="decor">Home Decor</option>
+                            <option value="garden">Garden Items</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="price-filter">Price Range:</label>
+                        <select id="price-filter">
+                            <option value="all">All Prices</option>
+                            <option value="0-500">₹0 - ₹500</option>
+                            <option value="500-1000">₹500 - ₹1000</option>
+                            <option value="1000-2000">₹1000 - ₹2000</option>
+                            <option value="2000+">₹2000+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="ngo-filter">NGO:</label>
+                        <select id="ngo-filter">
+                            <option value="all">All NGOs</option>
+                            <option value="ecowarriors">EcoWarriors Foundation</option>
+                            <option value="greenrevolution">Green Revolution NGO</option>
+                            <option value="cleanearth">Clean Earth Initiative</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="products-grid">
+                    <div class="product-card-detailed">
+                        <div class="product-image-detailed">👜</div>
+                        <div class="product-info-detailed">
+                            <div class="product-name">Eco-Friendly Tote Bag</div>
+                            <div class="product-ngo">by EcoWarriors Foundation</div>
+                            <div class="product-description">Durable tote bag made from 15 recycled plastic bottles</div>
+                            <div class="product-impact">♻️ Made from 0.5kg recycled plastic</div>
+                            <div class="product-price-section">
+                                <span class="product-price">₹299</span>
+                                <button class="btn btn-green">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-detailed">
+                        <div class="product-image-detailed">🪑</div>
+                        <div class="product-info-detailed">
+                            <div class="product-name">Recycled Plastic Chair</div>
+                            <div class="product-ngo">by Green Revolution NGO</div>
+                            <div class="product-description">Comfortable outdoor chair made from ocean plastic waste</div>
+                            <div class="product-impact">♻️ Made from 2kg recycled plastic</div>
+                            <div class="product-price-section">
+                                <span class="product-price">₹1,299</span>
+                                <button class="btn btn-green">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-detailed">
+                        <div class="product-image-detailed">🧱</div>
+                        <div class="product-info-detailed">
+                            <div class="product-name">Plastic Building Bricks</div>
+                            <div class="product-ngo">by Clean Earth Initiative</div>
+                            <div class="product-description">Strong, lightweight bricks for construction projects</div>
+                            <div class="product-impact">♻️ Made from 0.8kg recycled plastic per brick</div>
+                            <div class="product-price-section">
+                                <span class="product-price">₹25/piece</span>
+                                <button class="btn btn-green">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-detailed">
+                        <div class="product-image-detailed">🌱</div>
+                        <div class="product-info-detailed">
+                            <div class="product-name">Garden Planters Set</div>
+                            <div class="product-ngo">by EcoWarriors Foundation</div>
+                            <div class="product-description">Set of 3 decorative planters for your garden</div>
+                            <div class="product-impact">♻️ Made from 1.2kg recycled plastic</div>
+                            <div class="product-price-section">
+                                <span class="product-price">₹899</span>
+                                <button class="btn btn-green">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-detailed">
+                        <div class="product-image-detailed">🎨</div>
+                        <div class="product-info-detailed">
+                            <div class="product-name">Artistic Wall Hanging</div>
+                            <div class="product-ngo">by Green Revolution NGO</div>
+                            <div class="product-description">Beautiful handcrafted wall art from plastic waste</div>
+                            <div class="product-impact">♻️ Made from 0.3kg recycled plastic</div>
+                            <div class="product-price-section">
+                                <span class="product-price">₹499</span>
+                                <button class="btn btn-green">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-detailed">
+                        <div class="product-image-detailed">🏠</div>
+                        <div class="product-info-detailed">
+                            <div class="product-name">Outdoor Storage Box</div>
+                            <div class="product-ngo">by Clean Earth Initiative</div>
+                            <div class="product-description">Weather-resistant storage solution for gardens</div>
+                            <div class="product-impact">♻️ Made from 3kg recycled plastic</div>
+                            <div class="product-price-section">
+                                <span class="product-price">₹1,899</span>
+                                <button class="btn btn-green">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shopping-cart" id="shopping-cart" style="display: none;">
+                    <h3>Shopping Cart</h3>
+                    <div class="cart-items" id="cart-items">
+                        <!-- Cart items will be populated here -->
+                    </div>
+                    <div class="cart-total">
+                        <strong>Total: ₹<span id="cart-total">0</span></strong>
+                    </div>
+                    <button class="btn btn-green" onclick="checkout()">Proceed to Checkout</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About PlastiGen</h3>
+                    <p>Connecting communities with NGOs to create a plastic-free future through innovative recycling solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#ngos">NGOs</a>
+                    <a href="#store">Store</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Community Guidelines</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+            <p>&copy; 2025 PlastiGen. All rights reserved. Making the world greener, one plastic bottle at a time.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login to PlastiGen</h2>
+            <form>
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-green" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Join PlastiGen</h2>
+            <form>
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="userType">I am a:</label>
+                    <select id="userType" required>
+                        <option value="">Select...</option>
+                        <option value="individual">Individual User</option>
+                        <option value="ngo">NGO Representative</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-green" style="width: 100%;">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donate Plastic Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('donateModal')">&times;</span>
+            <h2>Donate Your Plastic</h2>
+            <form>
+                <div class="form-group">
+                    <label for="plasticType">Type of Plastic</label>
+                    <select id="plasticType" required>
+                        <option value="">Select...</option>
+                        <option value="bottles">Plastic Bottles</option>
+                        <option value="bags">Plastic Bags</option>
+                        <option value="containers">Food Containers</option>
+                        <option value="mixed">Mixed Plastic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="plasticQuantity">Estimated Quantity (kg)</label>
+                    <input type="number" id="plasticQuantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="pickupAddress">Pickup Address</label>
+                    <textarea id="pickupAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pickupDate">Preferred Pickup Date</label>
+                    <input type="date" id="pickupDate" required>
+                </div>
+                <button type="submit" class="btn btn-green" style="width: 100%;">Schedule Pickup</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- NGO Registration Modal -->
+    <div id="ngoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ngoModal')">&times;</span>
+            <h2>Join as NGO Partner</h2>
+            <form>
+                <div class="form-group">
+                    <label for="ngoName">Organization Name</label>
+                    <input type="text" id="ngoName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ngoMission">Mission Statement</label>
+                    <textarea id="ngoMission" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ngoLocation">Service Area</label>
+                    <input type="text" id="ngoLocation" placeholder="City, State" required>
+                </div>
+                <div class="form-group">
+                    <label for="ngoCapacity">Collection Capacity (kg/month)</label>
+                    <input type="number" id="ngoCapacity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="ngoContact">Contact Person</label>
+                    <input type="text" id="ngoContact" required>
+                </div>
+                <button type="submit" class="btn btn-green" style="width: 100%;">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Animate stats on page load
+        function animateStats() {
+            const stats = [
+                { id: 'plasticRecycled', target: 12000, suffix: '' },
+                { id: 'activeNGOs', target: 45, suffix: '' },
+                { id: 'productsCreated', target: 2850, suffix: '' },
+                { id: 'usersJoined', target: 8200, suffix: '' }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                let current = 0;
+                const increment = stat.target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= stat.target) {
+                        current = stat.target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current).toLocaleString() + stat.suffix;
+                }, 40);
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submissions (placeholder functionality)
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your submission! This is a demo - in a real application, this would process your request.');
+                // Close the modal
+                const modal = form.closest('.modal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Initialize animations when page loads
+        window.addEventListener('load', function() {
+            setTimeout(animateStats, 500);
+        });
+
+        // Mobile menu toggle (basic implementation)
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.ngo-card, .product-card-detailed, .stat-card, .dashboard-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
